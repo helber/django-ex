@@ -39,3 +39,7 @@ POD_INSTANCE_NAME=`oc get pods \
 
 # Run command in a container of the specified pod:
 oc exec -p "$POD_INSTANCE_NAME" -it -- bash -c "${@:-echo}"
+
+oc exec -p "$POD_INSTANCE_NAME" -it -- bash -c "./manage.py createsuperuser --username admin --noinput"
+oc exec -p "$POD_INSTANCE_NAME" -it -- bash -c "echo \"from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'pass')\" | python manage.py shell"
+
